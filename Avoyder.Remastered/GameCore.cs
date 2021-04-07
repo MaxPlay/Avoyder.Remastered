@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Avoyder.Remastered.Services;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Avoyder.Remastered
 {
@@ -9,33 +11,32 @@ namespace Avoyder.Remastered
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        public static IServiceProvider GameServices { get; private set; }
+
         public GameCore()
         {
+            GameServices = Services;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Services.AddService(new InputService());
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
+            Services.GetService<InputService>().Update();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -43,8 +44,6 @@ namespace Avoyder.Remastered
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }
