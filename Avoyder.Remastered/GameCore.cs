@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace Avoyder.Remastered
 {
@@ -11,7 +10,7 @@ namespace Avoyder.Remastered
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        public static IServiceProvider GameServices { get; private set; }
+        public static GameServiceContainer GameServices { get; private set; }
 
         public GameCore()
         {
