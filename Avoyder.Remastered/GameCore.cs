@@ -7,28 +7,27 @@ namespace Avoyder.Remastered
 {
     public class GameCore : Game
     {
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-
         public static GameServiceContainer GameServices { get; private set; }
 
         public GameCore()
         {
             GameServices = Services;
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Services.AddService(Content);
+            Services.AddService<IAssetService>(new AssetService(Content));
+            Services.AddService(new GraphicsDeviceManager(this));
             Services.AddService(new InputService());
         }
 
         protected override void Initialize()
         {
+            Services.AddService(new SpriteBatch(GraphicsDevice));
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
